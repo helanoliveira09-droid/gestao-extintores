@@ -1496,6 +1496,7 @@ function openModalRelatorio() {
     el('relRecebido').value = '';
     el('relCargoEntrega').value = '';
     el('relEmpresaRecebe').value = '';
+    el('relEngenheiroSegurançadoTrabalho').value = '';
     el('relObs').value = '';
     el('relFiltroStatus').value = 'Pendente';
     el('modalRelatorio').classList.add('active');
@@ -1536,7 +1537,8 @@ function atualizarPreviewRelatorio() {
 function imprimirRelatorio() {
     const entregue = el('relEntregue').value.trim();
     const recebido = el('relRecebido').value.trim();
-    if (!entregue || !recebido) { alert('Preencha "Entregue por" e "Recebido por".'); return; }
+    const recebido = el('relEngenheiroSeguançadoTrabalho').value.trim();
+    if (!entregue || !recebido || !EngenheiroSeguançadoTrabalho) { alert('Preencha "Entregue por" e "Recebido por" e "EngenheiroSeguançadoTrabalho".'); return; }
     const lista = getFiltradosRelatorio();
     if (!lista.length) { alert('Nenhum registro para imprimir.'); return; }
     const cargoEntrega = el('relCargoEntrega').value.trim();
