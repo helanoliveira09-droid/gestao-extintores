@@ -5,11 +5,11 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Sistema de Gestão - Extintores</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&family=Space+Grotesk:wght@500;600;700&display=swap" rel="stylesheet">
     <script src="https://cdn.jsdelivr.net/npm/chart.js@3.9.1/dist/chart.min.js"></script>
     <style>
         :root {
-            --bg:        #f4f6fb;
+            --bg:        #eef1f8;
             --surface:   #ffffff;
             --surface2:  #f0f3f9;
             --border:    #dde3ef;
@@ -24,16 +24,24 @@
             --radius:    8px;
             --radius-lg: 14px;
             --font:      'Inter', sans-serif;
+            --font-display: 'Space Grotesk', 'Inter', sans-serif;
             --shadow-sm: 0 1px 4px rgba(60,80,140,.08);
             --shadow:    0 4px 20px rgba(60,80,140,.12);
             --shadow-lg: 0 8px 32px rgba(60,80,140,.16);
+            --navy-900:  #0a0f24;
+            --navy-800:  #10182f;
+            --navy-700:  #16213e;
+            --cyan:      #35d0ff;
         }
 
         *, *::before, *::after { margin:0; padding:0; box-sizing:border-box; }
         html { font-size: 16px; }
         body {
             font-family: var(--font);
-            background: var(--bg);
+            background:
+                radial-gradient(1100px 480px at 100% -10%, rgba(59,110,248,.06), transparent 60%),
+                radial-gradient(900px 420px at -10% 0%, rgba(0,169,138,.05), transparent 55%),
+                var(--bg);
             color: var(--text);
             min-height: 100vh;
             padding-bottom: 48px;
@@ -46,35 +54,87 @@
 
         /* HEADER */
         .header {
-            background: var(--surface);
-            border-bottom: 1px solid var(--border);
+            background:
+                radial-gradient(700px 160px at 15% 0%, rgba(53,208,255,.14), transparent 65%),
+                linear-gradient(120deg, var(--navy-900), var(--navy-700) 60%, var(--navy-800));
+            background-color: var(--navy-900);
+            border-bottom: 1px solid rgba(255,255,255,.06);
             padding: 0 32px;
             display: flex;
             justify-content: space-between;
             align-items: center;
-            height: 64px;
+            height: 68px;
             position: sticky;
             top: 0;
             z-index: 100;
-            box-shadow: var(--shadow-sm);
+            box-shadow: 0 6px 24px rgba(10,15,36,.28);
+            position: relative;
         }
 
-        .header-left { display: flex; align-items: center; gap: 12px; }
+        .header::after {
+            content: '';
+            position: absolute;
+            left: 0; right: 0; bottom: -1px; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--cyan) 20%, var(--accent) 55%, transparent 90%);
+            opacity: .8;
+        }
+
+        .header-left { display: flex; align-items: center; gap: 14px; }
 
         .logo-icon {
-            width: 38px; height: 38px;
+            width: 40px; height: 40px;
             background: linear-gradient(135deg, #e03050, #e8920a);
-            border-radius: 10px;
+            border-radius: 11px;
             display: flex; align-items: center; justify-content: center;
-            font-size: 18px; box-shadow: 0 2px 8px rgba(224,48,80,.3);
+            font-size: 19px;
+            box-shadow: 0 0 0 1px rgba(255,255,255,.08), 0 0 18px rgba(224,48,80,.45), 0 2px 8px rgba(0,0,0,.3);
         }
 
-        .header-title { font-size: 16px; font-weight: 700; }
-        .header-title span { color: var(--text-muted); font-weight: 400; }
+        .header-title-block { display: flex; flex-direction: column; gap: 3px; }
+
+        .header-title { font-family: var(--font-display); font-size: 16px; font-weight: 700; color: #f2f5ff; letter-spacing: .2px; }
+        .header-title span { color: #8792b8; font-weight: 500; }
+
+        .header-tagline {
+            display: flex; align-items: center; gap: 8px;
+        }
+
+        .status-pill {
+            display: inline-flex; align-items: center; gap: 6px;
+            font-size: 10px; font-weight: 700; letter-spacing: .6px; text-transform: uppercase;
+            color: #7fe8b8;
+            background: rgba(10,170,99,.12);
+            border: 1px solid rgba(10,170,99,.3);
+            padding: 2px 9px 2px 7px;
+            border-radius: 20px;
+        }
+
+        .status-dot {
+            width: 6px; height: 6px; border-radius: 50%;
+            background: #23d989;
+            box-shadow: 0 0 0 0 rgba(35,217,137,.6);
+            animation: pulseDot 2s infinite;
+        }
+
+        @keyframes pulseDot {
+            0%   { box-shadow: 0 0 0 0 rgba(35,217,137,.55); }
+            70%  { box-shadow: 0 0 0 6px rgba(35,217,137,0); }
+            100% { box-shadow: 0 0 0 0 rgba(35,217,137,0); }
+        }
+
+        .version-tag {
+            font-size: 10px; font-weight: 700; letter-spacing: .6px;
+            color: #9fb2ff;
+            background: rgba(59,110,248,.15);
+            border: 1px solid rgba(59,110,248,.35);
+            padding: 2px 8px;
+            border-radius: 6px;
+            font-family: var(--font-display);
+        }
 
         .header-meta { display: flex; gap: 28px; align-items: center; }
-        .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: var(--text-muted); font-weight: 600; }
-        .meta-value { font-size: 13px; color: var(--accent); margin-top: 2px; font-weight: 500; }
+        .meta-label { font-size: 10px; text-transform: uppercase; letter-spacing: 1px; color: #6f7aa3; font-weight: 600; }
+        .meta-value { font-family: var(--font-display); font-size: 13px; color: #cfe0ff; margin-top: 2px; font-weight: 600; }
 
         /* CONTAINER */
         .container { max-width: 1440px; margin: 0 auto; padding: 28px 32px; }
@@ -120,7 +180,7 @@
         .kpi-card.blue .kpi-icon    { background: rgba(59,110,248,.1); }
 
         .kpi-label { font-size: 11px; font-weight: 600; text-transform: uppercase; letter-spacing: .8px; color: var(--text-muted); margin-bottom: 6px; }
-        .kpi-value { font-size: 26px; font-weight: 600; line-height: 1; margin-bottom: 6px; }
+        .kpi-value { font-family: var(--font-display); font-size: 28px; font-weight: 700; line-height: 1; margin-bottom: 6px; letter-spacing: -.3px; }
 
         .kpi-card.green .kpi-value  { color: var(--success); }
         .kpi-card.orange .kpi-value { color: var(--warn); }
@@ -154,7 +214,11 @@
         }
 
         .tab-btn:hover { color: var(--text); background: #f8f9fc; }
-        .tab-btn.active { color: var(--accent); border-bottom-color: var(--accent); }
+        .tab-btn.active {
+            color: var(--accent);
+            border-bottom-color: var(--accent);
+            background: linear-gradient(180deg, rgba(59,110,248,.07), transparent);
+        }
 
         .tab-content { display: none; }
         .tab-content.active { display: block; }
@@ -463,6 +527,33 @@
             color: #1d3f96;
         }
 
+        /* FOOTER */
+        .app-footer {
+            margin-top: 36px;
+            padding: 18px 22px;
+            border-top: 1px solid var(--border);
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            flex-wrap: wrap;
+            gap: 8px;
+        }
+
+        .app-footer-brand {
+            font-family: var(--font-display);
+            font-size: 12px;
+            font-weight: 600;
+            color: var(--text-dim);
+        }
+
+        .app-footer-brand span { color: var(--text-muted); font-weight: 400; }
+
+        .app-footer-note {
+            font-size: 11px;
+            color: var(--text-muted);
+            letter-spacing: .2px;
+        }
+
         @media (max-width: 1024px) {
             .chart-grid { grid-template-columns: 1fr; }
         }
@@ -470,6 +561,7 @@
         @media (max-width: 768px) {
             .header { padding: 0 16px; height: auto; padding: 12px 16px; }
             .header-meta { display: none; }
+            .version-tag { display: none; }
             .container { padding: 16px; }
             .kpi-grid { grid-template-columns: repeat(2, 1fr); gap: 10px; }
             .kpi-value { font-size: 20px; }
@@ -487,8 +579,14 @@
 <!-- HEADER -->
 <header class="header">
     <div class="header-left">
-        <div class="logo-icon">🔴</div>
-        <div class="header-title">Gestão de Segurança <span>Extintores</span></div>
+        <div class="logo-icon">🧯</div>
+        <div class="header-title-block">
+            <div class="header-title">Gestão de Segurança <span>· Extintores</span></div>
+            <div class="header-tagline">
+                <span class="status-pill"><span class="status-dot"></span>Sistema Online</span>
+                <span class="version-tag">v2.0</span>
+            </div>
+        </div>
     </div>
     <div class="header-meta">
         <div style="display: flex; gap: 24px;">
@@ -688,6 +786,12 @@
                 </div>
             </div>
         </div>
+    </div>
+
+    <!-- FOOTER -->
+    <div class="app-footer">
+        <div class="app-footer-brand">🧯 <strong>Gestão de Segurança</strong> <span>· Extintores</span></div>
+        <div class="app-footer-note">Conformidade NR-23 · Dados sincronizados em nuvem (MongoDB Atlas)</div>
     </div>
 
 </div>
@@ -1497,6 +1601,8 @@ function openModalRelatorio() {
     el('relCargoEntrega').value = '';
     el('relEmpresaRecebe').value = '';
     el('relObs').value = '';
+    el('relEngenheiro').value = '';
+    el('relEngenheiroRegistro').value = '';
     el('relFiltroStatus').value = 'Pendente';
     el('modalRelatorio').classList.add('active');
     atualizarPreviewRelatorio();
@@ -1542,6 +1648,8 @@ function imprimirRelatorio() {
     const cargoEntrega = el('relCargoEntrega').value.trim();
     const empresaRecebe = el('relEmpresaRecebe').value.trim();
     const obs = el('relObs').value.trim();
+    const engenheiro = el('relEngenheiro').value.trim();
+    const engenheiroRegistro = el('relEngenheiroRegistro').value.trim();
     const hoje = new Date().toLocaleDateString('pt-BR', {day:'2-digit',month:'2-digit',year:'numeric',hour:'2-digit',minute:'2-digit'});
     const thS = `background:#1a2a4a;color:#fff;padding:9px 12px;text-align:left;font-size:10px;text-transform:uppercase;letter-spacing:.7px;font-weight:700;`;
     const tdS = `padding:9px 12px;border-bottom:1px solid #e8edf5;font-size:12px;color:#333;`;
@@ -1595,6 +1703,16 @@ function imprimirRelatorio() {
                     <div style="flex:1;text-align:center;"><div style="border-bottom:2px solid #1a1f36;height:52px;margin-bottom:10px;"></div>
                         <div style="font-size:13px;font-weight:700;">${recebido}</div>${empresaRecebe?`<div style="font-size:11px;color:#7a85a3;">${empresaRecebe}</div>`:''}
                         <div style="font-size:10px;color:#aaa;margin-top:4px;text-transform:uppercase;">Responsável pelo recebimento</div></div>
+                </div>
+            </div>
+            <div style="margin-top:32px;border-top:1px dashed #dde3ef;padding-top:24px;">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#3b6ef8;margin-bottom:24px;">Responsável Técnico</div>
+                <div style="display:flex;justify-content:center;">
+                    <div style="text-align:center;min-width:280px;"><div style="border-bottom:2px solid #1a1f36;height:52px;margin-bottom:10px;"></div>
+                        <div style="font-size:13px;font-weight:700;">${engenheiro || '\u00A0'}</div>
+                        <div style="font-size:11px;color:#7a85a3;">${engenheiroRegistro || 'Registro CREA/MTE'}</div>
+                        <div style="font-size:10px;color:#aaa;margin-top:4px;text-transform:uppercase;">Engenheiro(a) de Segurança do Trabalho</div>
+                    </div>
                 </div>
             </div>
             <div style="margin-top:20px;text-align:center;font-size:10px;color:#bbb;border-top:1px dashed #e0e0e0;padding-top:12px;">Documento gerado pelo Sistema de Gestão de Segurança — ${hoje}</div>
@@ -1654,6 +1772,15 @@ function imprimirListaExtintores() {
                     <td style="${tdS}"><span style="background:${sBg(st)};color:${sC(st)};padding:2px 8px;border-radius:12px;font-size:11px;font-weight:700;">${sText(st)}</span></td>
                 </tr>`;}).join('')}</tbody>
             </table>
+            <div style="margin-top:36px;border-top:1px dashed #dde3ef;padding-top:24px;">
+                <div style="font-size:10px;font-weight:700;text-transform:uppercase;letter-spacing:1px;color:#3b6ef8;margin-bottom:24px;">Responsável Técnico</div>
+                <div style="display:flex;justify-content:center;">
+                    <div style="text-align:center;min-width:280px;"><div style="border-bottom:2px solid #1a1f36;height:52px;margin-bottom:10px;"></div>
+                        <div style="font-size:11px;color:#7a85a3;">Registro CREA/MTE</div>
+                        <div style="font-size:10px;color:#aaa;margin-top:4px;text-transform:uppercase;">Engenheiro(a) de Segurança do Trabalho</div>
+                    </div>
+                </div>
+            </div>
             <div style="margin-top:20px;text-align:center;font-size:10px;color:#bbb;border-top:1px dashed #e0e0e0;padding-top:12px;">Documento gerado pelo Sistema de Gestão de Segurança — ${hoje}</div>
         </div>
     </div>`;
@@ -1699,7 +1826,7 @@ function imprimirListaExtintores() {
                     <div class="form-group" style="margin-bottom: 0;">
                         <label>Recebido por *</label>
                         <input type="text" id="relRecebido" placeholder="Nome completo de quem recebe" required>
-                    </div>                    
+                    </div>
                 </div>
                 <div class="form-row" style="margin-top: 12px;">
                     <div class="form-group" style="margin-bottom: 0;">
@@ -1710,12 +1837,27 @@ function imprimirListaExtintores() {
                         <label>Empresa / Serviço (recebedor)</label>
                         <input type="text" id="relEmpresaRecebe" placeholder="Ex: Empresa Manutenção LTDA">
                     </div>
-                 </div>
-                 <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
+                </div>
+                <div class="form-group" style="margin-top: 12px; margin-bottom: 0;">
                     <label>Observações gerais do relatório</label>
                     <textarea id="relObs" rows="2" placeholder="Informações adicionais para o relatório..."></textarea>
                 </div>
-             </div>
+            </div>
+
+            <div style="background: var(--surface2); border: 1px solid var(--border); border-radius: var(--radius); padding: 16px; margin-top: 16px;">
+                <p style="font-size: 12px; color: var(--text-muted); margin-bottom: 12px; font-weight: 600; text-transform: uppercase; letter-spacing: .5px;">👷 Responsável Técnico (assinatura no documento impresso)</p>
+                <div class="form-row">
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Engenheiro(a) de Segurança do Trabalho</label>
+                        <input type="text" id="relEngenheiro" placeholder="Nome completo do responsável técnico">
+                    </div>
+                    <div class="form-group" style="margin-bottom: 0;">
+                        <label>Registro Profissional (CREA / MTE)</label>
+                        <input type="text" id="relEngenheiroRegistro" placeholder="Ex: CREA-SP 123456789">
+                    </div>
+                </div>
+                <p style="font-size: 11px; color: var(--text-muted); margin-top: 8px;">Opcional: se preenchido, o nome e o registro aparecem no campo de assinatura do relatório impresso. Se deixado em branco, o espaço para assinatura manual do engenheiro é impresso mesmo assim.</p>
+            </div>
         </div>
         <div class="modal-footer">
             <button type="button" class="btn btn-secondary" onclick="closeModal('modalRelatorio')">Cancelar</button>
@@ -1737,7 +1879,6 @@ function imprimirListaExtintores() {
 .rel-table tbody tr:hover { background: #f7f9ff; }
 .rel-table tbody tr:last-child td { border-bottom: none; }
 .sig-box { border-top: 1.5px solid #222; margin-top: 48px; padding-top: 8px; font-size: 12px; color: #555; min-width: 220px; text-align: center; }
-/* Colar a partir da linha 1741 (dentro da tag style) */
 </style>
 
 <div id="printArea" style="display:none;"></div>
